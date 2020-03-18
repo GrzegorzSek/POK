@@ -1,0 +1,2 @@
+# POK
+Podstawy Obliczeń Komputerowych
