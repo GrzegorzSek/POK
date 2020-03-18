@@ -1,0 +1,26 @@
+close all;
+clear;
+clc;
+
+% Dla danej macierzy - wartosci rozwiazania rosna do nieskonczonosci wraz z iloscia iteracji 
+% Rozwazyc macierz rzadka i wstazkowa
+A = [2, 1, 1, -1; 1, 1, -1, 1; 1, 1, 1,1; -1, 2, -1, 1]; % Macierz wspolczynnikow
+B = [3; 4; 10; 4]; % Macierz wyrazow wolnych
+X = [0; 0; 0; 0]; % Macierz niewiadomych
+
+% Dla danych z .pdf dziala
+%A = [4, -1, 0; -1, 4, -1; 0, -1, 4];
+%B = [2; 6; 2];
+%X = [0; 0; 0];
+n = size(X,1); % Liczba niewiadomych
+
+% Metoda Gaussa-Seidla, bo bardziej precyzyjny
+L = tril(A, -1);
+D = diag(diag(A));
+U = triu(A, 1);
+Bgs = -(inv(L+D))*U;
+c = inv(L+D)*B;
+
+for i=1:3
+    X = Bgs*X+c
+end
