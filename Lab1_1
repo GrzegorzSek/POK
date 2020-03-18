@@ -1,0 +1,25 @@
+close all;
+clear;
+clc;
+
+A = [2, 1, 1, -1; 1, 1, -1, 1; 1, 1, 1,1; -1, 2, -1, 1]; % Macierz wspolczynnikow
+B = [3; 4; 10; 4]; % Macierz wyrazow wolnych
+X = [0; 0; 0; 0]; % Macierz niewiadomych
+n = size(X,1); % Liczba niewiadomych
+m = 4; % Liczba rownan
+ 
+% Twierdzenie Kroneckera-Capellego
+U = [A, B]; % Macierz uzupelniona
+r = rank(A); % Rzad macierzy wspolczynnikow
+s = rank(U); % Rzad macierzy uzupelnionej
+
+if r == s
+    % Posiada przynajmniej jedno rozwiazanie
+    if r == n
+        disp('Uklad ma dokladnie jedno rozwiazanie');
+    elseif r<n
+        disp('Uklad nieoznaczony - ma nieskonczenie wiele rozwiazan');
+    end
+else 
+    disp('Uklad sprzeczny - nie posiada rozwiazan');
+end
