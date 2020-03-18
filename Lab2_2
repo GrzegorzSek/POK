@@ -1,0 +1,22 @@
+close all;
+clear;
+clc;
+
+A = [2, 1, 1, -1; 1, 1, -1, 1; 1, 1, 1,1; -1, 2, -1, 1]; % Macierz wspolczynnikow
+B = [3; 4; 10; 4]; % Macierz wyrazow wolnych
+X = [0; 0; 0; 0]; % Macierz niewiadomych
+n = size(X,1); % Liczba niewiadomych
+
+AB=[A B];
+
+for i=1:n
+   AB(i,:)=AB(i,:)./AB(i,i); 
+   for j=1:n
+       if i~=j
+        AB(j,:)=AB(j,:)-AB(i,:)*AB(j,i);
+       end
+   end
+end
+
+X = AB(:,n+1);
+disp(X);
