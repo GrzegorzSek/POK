@@ -1,0 +1,65 @@
+%{
+Rozwiązanie w opraciu o: http://bc.pollub.pl/Content/1370/metody.pdf
+Strony 151-154
+Dla funkcji z literatury
+https://eduinf.waw.pl/inf/alg/008_nm/0008.php
+%}
+
+close all;
+clear;
+clc;
+format long;
+
+% Przedział <a,b>
+a = 0.25;
+b = 0.75;
+%a = -3;
+%b = 1;
+% Dokładność
+eps = 1e-12;
+% Rozwiązania w poszczególnych iteracjach
+x = [];
+y = [];
+% Liczba iteracji
+i = 1;
+% Szukane rozwiązanie
+solution = 0;
+%środek przedziału
+Fx=0;
+%wartości na krańcach przedziałów
+Fa=f(a);
+Fb=f(b);
+
+while abs(b-a)>2*eps
+    if Fa*Fb>0
+         disp('Funckja nie ma różnych znaków na krańcach przedziału');
+        break;
+    end
+    
+    solution=(Fa*b-Fb*a)/(Fa-Fb);
+    Fx=f(solution);
+    if abs(Fx)<eps
+        x(i)=solution;
+        y(i)=f(solution);
+        break;
+    end
+    
+    if Fx*Fa<0
+        b=solution;
+        Fb=Fx;
+    else
+        a=solution;
+        Fa=Fx;
+    end
+    
+    x(i)=solution;
+    y(i)=f(solution);
+    fprintf('Iteracja %d: wartosc x = %f, f(x) = %f\n',i,x(i),y(i));
+    i = i+1;
+end
+
+function y = f(x)
+    y = 3*x-cos(x)-1; % funkcja z literatury
+    %y = sin(x^2-x+1/3)+x/2; % 
+end
+
