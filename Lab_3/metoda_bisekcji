@@ -1,10 +1,6 @@
 %{
-Rozwiązanie w opraciu o: http://bc.pollub.pl/Content/1370/metody.pdf
+Rozwiazanie w opraciu o: http://bc.pollub.pl/Content/1370/metody.pdf
 Strony 147-150
-Dla funkcji z literatury
-Rozwiązanie w literaturze uzyskujemy po 7 iteracjach dla eps=1e-2
-W programie po 6 iteracjach
-WHY?
 %}
 
 close all;
@@ -12,20 +8,20 @@ clear;
 clc;
 format long;
 
-% Przedział <a,b>
-a = 0;
+% Przedzial <a,b>
+a = 0.1;
 b = 1;
-% Dokładność
-eps = 1e-2;
-% Rozwiązania w poszczególnych iteracjach
+% Dokladnosc
+eps = 1e-7;
+% Rozwiazania w poszczególnych iteracjach
 x = [];
 y = [];
 % Liczba iteracji
 i = 1;
-% Szukane rozwiązanie
+% Szukane rozwiazanie
 solution = 0;
 
-while abs(b-a)>2*eps
+while abs(b-a)>2*eps % Kryterium stopu
     x(i) = (a+b)/2;
     y(i) = f(x(i));
     if abs(y(i))<eps
@@ -43,7 +39,14 @@ while abs(b-a)>2*eps
     i = i+1;
 end
 
+fplot(@(x) f(x))
+xlabel('x');
+ylabel('f(x)');
+grid on;
+
 function y = f(x)
-    y = x^3+x-1; % funkcja z literatury
+    %y = x^3+x-1; % funkcja z literatury <0,1>
+    %y = x+log10(x)-sin(x)^2; % 1. przyklad
+    y = x^2+log10(x)-sin(x); % 2. przyklad
 end
 
