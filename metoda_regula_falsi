@@ -1,5 +1,5 @@
 %{
-Rozwiązanie w opraciu o: http://bc.pollub.pl/Content/1370/metody.pdf
+Rozwiazanie w oparciu o: http://bc.pollub.pl/Content/1370/metody.pdf
 Strony 151-154
 Dla funkcji z literatury
 https://eduinf.waw.pl/inf/alg/008_nm/0008.php
@@ -10,29 +10,27 @@ clear;
 clc;
 format long;
 
-% Przedział <a,b>
-a = 0.25;
-b = 0.75;
-%a = -3;
-%b = 1;
-% Dokładność
-eps = 1e-12;
-% Rozwiązania w poszczególnych iteracjach
+% Przedzial <a,b>
+a = 0.1;
+b = 1;
+% Dokladnosc
+eps = 1e-6;
+% Rozwiazania w poszczegolnych iteracjach
 x = [];
 y = [];
 % Liczba iteracji
 i = 1;
-% Szukane rozwiązanie
+% Szukane rozwiazanie
 solution = 0;
-%środek przedziału
+% Srodek przedzialu
 Fx=0;
-%wartości na krańcach przedziałów
+% Wartosci na krancach przedzialow
 Fa=f(a);
 Fb=f(b);
 
 while abs(b-a)>2*eps
     if Fa*Fb>0
-         disp('Funckja nie ma różnych znaków na krańcach przedziału');
+         disp('Funkcja nie ma roznych znakow na krancach przedzialu');
         break;
     end
     
@@ -58,8 +56,14 @@ while abs(b-a)>2*eps
     i = i+1;
 end
 
+fplot(@(x) f(x))
+xlabel('x');
+ylabel('f(x)');
+grid on;
+
 function y = f(x)
-    y = 3*x-cos(x)-1; % funkcja z literatury
-    %y = sin(x^2-x+1/3)+x/2; % 
+    %y = 3*x-cos(x)-1; % funkcja z literatury <0.25, 0.75>
+    %y = x+log10(x)-sin(x)^2; % 1. przyklad
+    y = x^2+log10(x)-sin(x); % 2. przyklad
 end
 
