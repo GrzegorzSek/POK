@@ -1,0 +1,60 @@
+%{
+W oparciu o:
+http://www.algorytm.org/procedury-numeryczne/interpolacja-wielomianowa.html
+%}
+
+close all;
+clear;
+clc;
+
+X = [
+    10^4, 10^3, 10^2, 10^1, 10^0;
+    20^4, 20^3, 20^2, 20^1, 20^0;
+    30^4, 30^3, 30^2, 30^1, 30^0;
+    40^4, 40^3, 40^2, 40^1, 40^0;
+    50^4, 50^3, 50^2, 50^1, 50^0;
+    ]; % Macierz wartosci x
+
+Y = [0.98; 0.93; 0.86; 0.76; 0.64]; % Macierz wartości f(x)
+A = [0; 0; 0; 0; 0]; % Macierz współczynników a0,...,an-1
+n = size(A, 1); % Liczba współczynników a
+
+% Rozwiązanie układu równań metodą eliminacji Gaussa-Jordana
+% (z zajec laboratoryjnych nr 2)
+XY = [X Y];
+for i=1:n
+    XY(i,:)=XY(i,:)./XY(i,i);
+    for j=1:n
+        if i~=j
+            XY(j,:)=XY(j,:)-XY(i,:)*XY(j,i);
+        end
+    end
+end
+
+A = XY(:, n+1);
+for i=1:n
+    fprintf("a%d = %f\n", i-1, A(i)); 
+end
+
+points = 100;
+for x=1:points
+    %{ 
+    Ogólna postać wzoru w przypadku tego przykładu to:
+    f(x)=A(1)*x^4+A(2)*x^3+A(3)*x^2+A(4)*x^1+A(5)*x^0;
+    %} 
+    f(x) = 0;
+    for i=1:size(A)
+        f(x) = f(x)+(A(i)*x^(n-i));
+    end
+end
+
+fprintf("Dla x = 21 f(x) = %f\n", f(21));
+
+figure(1);
+plot(1:points, f);
+hold on;
+plot(X(:,4),Y, '.r');
+xlabel('x');
+ylabel('f(x)');
+title('f(x) = a_1x^4+a_2x^3+a_3x^2+a_4x^1+a_5x^0')
+grid on;
