@@ -71,3 +71,5 @@ for i=1:4
    f=@(x) (A(i)*(x-X(i))^3+B(i)*(x-X(i))^2+C(i)*(x-X(i))+Y(i));
    fprintf("%f(x-%f)^3+(%f)(x-%f)^2+(%f)(x-%f)+(%f)\n", A(i), X(i), B(i), X(i), C(i), X(i), Y(i)); 
 end
+
+fprintf("Dla x = 21 f(x) = %f\n", f(21));
