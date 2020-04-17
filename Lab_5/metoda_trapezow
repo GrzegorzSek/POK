@@ -1,0 +1,37 @@
+%{
+W oparciu o:
+http://www.algorytm.org/procedury-numeryczne/calkowanie-numeryczne-metoda-trapezow.html
+Calka od 2 do 5 z (x^2+3)dx daje 48
+W tej procedurze przy n=10 calka wynosi 48.045
+%}
+
+close all;
+clear;
+clc;
+format long;
+
+xp = 2; % Poczatek przedzialu
+xk = 5; % Koniec przedzialu
+n = 10; % Dokladnosc calkowania - podzial na n rownych czesci
+dx = (xk-xp)/n; % Szerokosc kazdej z czesci
+sum = 0; % Suma pol wszystkich trapezow
+x = []; % Wartosc x w poszczegolnych iteracjach
+P = []; % Pola poszczegolnych trapezow
+
+for i=1:n
+    x(i) = xp+i*dx;
+    if i==1
+       P(i) = ((f(xp)+f(x(i)))/2)*dx; 
+    else
+       P(i) = ((f(x(i-1))+f(x(i)))/2)*dx; 
+    end
+    
+    sum = sum+P(i);
+end
+
+fprintf('Dla n = %d wartosc calki wynosi: %f\n',n,sum);
+
+function y = f(x)
+    y = (x^2)+3; % Funkcja
+end
+
