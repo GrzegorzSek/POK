@@ -1,0 +1,74 @@
+close all;
+clear;
+clc;
+format long;
+
+% mateiały: https://www.l5.pk.edu.pl/~michal/pdfy/Metody15.pdf
+A = [3,1,2; 1, 8, 1; 2, 1, 1]; %macierz z ćwiczenia
+%A = [3,-2, 1, 4; -2, -6, 2, -1; 1, 2, -2, 5; 4, -1, 5, -7]; %macierz z
+%pdf'a
+X=transpose(A);
+[V,D]=eig(A); %sprawdzenie wyniku
+disp('wynik uzyskany przy pomocy gotowej funkcji z matlab"a ');
+disp('wektory');
+disp(V); 
+disp('wartości własne ');
+disp(D);
+p=0; 
+q=0;
+
+n=100; %liczba iteracji
+mi=0;
+t=0;
+c=0;
+s=0;
+W=eye(3);
+
+for k=1:n
+    temp = abs(A);
+    for i=1:size(A)
+        for j=1:size(A)
+            if i==j
+                temp(i,j)=0;
+            end
+        end
+    end
+    
+    max_value = max(temp(:));
+    [max_row, max_col] = find(ismember(temp, max(temp(:))));
+    p = max_row(2);
+    q = max_col(2);
+    
+    mi=(A(q,q)-A(p,p))/(2*A(p,q));
+    t=sign(mi)/(abs(mi)+sqrt(mi^2+1));
+    %t=1/(2*mi);
+    c=1/(sqrt(t^2+1));
+    s=t*c;
+    B=A;
+    B(p,p)=c^2*A(p,p)+s^2*A(q,q)-2*s*c*A(p,q);
+    B(q,q)=s^2*A(p,p)+c^2*A(q,q)+2*s*c*A(p,q);
+    B(p,q)=(c^2-s^2)*A(p,q)+c*s*(A(p,p)-A(q,q));
+    B(q,p)=B(p,q);
+    %B(q,p)=(c^2-s^2)*A(p,q)+c*s*(A(p,p)-A(q,q));
+    for r=1:size(A)
+        if r==p || r==q
+            continue;
+        end
+        B(r,p)=c*A(r,p)-s*A(r,q);
+        B(r,q)=s*A(r,p)+c*A(r,q);
+        B(p,r)=B(r,p);
+        B(q,r)=B(r,q);
+    end
+    X=W;
+    for r=1:size(A)
+        X(r,p)=c*W(r,p)-s*W(r,q);
+        X(r,q)=s*W(r,p)+c*W(r,q);
+    end
+    A=B;
+    W=X;
+end
+disp('---------------------------------------');
+disp('wartosci wlasne na przekątnej');
+disp(A);
+disp('wektory wlasne odpowiadajace wartosciom wlasnym w macierzy A');
+disp(W);
