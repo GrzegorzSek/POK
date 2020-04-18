@@ -1,0 +1,8 @@
+close all;
+clear;
+clc;
+
+a=[3, 1, 2; 1, 8, 1; 2, 1, 1]; %macierz do obliczen
+n=3; %wymiar macierzy (musi byc kwadratowa, wiec jedna wartosc)
+it_max=10; %liczba iteracji
+[ v, d, it_num, rot_num ] = jacobi_eigenvalue ( n, a, it_max )
